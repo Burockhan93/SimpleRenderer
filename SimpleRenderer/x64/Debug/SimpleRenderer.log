@@ -1,2 +1,6 @@
 ﻿  SimpleRenderer.cpp
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(56,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(57,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(58,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(59,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe
