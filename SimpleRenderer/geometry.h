@@ -9,15 +9,16 @@ template<class T> struct Vec2 {
 		struct { T x, y; };
 		T raw[2];
 	};
-
-	Vec2() : u{0}, v{0}{}
-	Vec2(T _u, T _v) : u{_u}, v{_v}{}
+	Vec2() : u(0), v(0) {}
+	Vec2(T _u, T _v) : u(_u), v(_v) {}
 
 	inline Vec2<T> operator +(const Vec2<T>& V) const { return Vec2<T>{u + V.u, v + V.v}; }
 	inline Vec2<T> operator -(const Vec2<T>& V) const { return Vec2<T>{u - V.u, v - V.v}; }
-	inline Vec2<T> operator *(float t)					const { return Vec2<T>{u* t, v* t}; }
+	inline Vec2<T> operator *(float f)					const { return Vec2<T>(u* f, v* f); }
 	template<class T> 
 	friend std::ostream& operator<<(std::ostream& out, const Vec2<T>& v);
+	T& operator[](int i) { return raw[i]; }
+	const T& operator[](int i) const { return raw[i]; }
 	
 
 };

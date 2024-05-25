@@ -1,6 +1,71 @@
 ﻿  SimpleRenderer.cpp
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(56,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(57,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(58,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(59,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(35,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,77): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,54): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,31): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,149): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,126): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,103): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(118,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(119,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(120,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(121,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(135,105): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(135,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe
