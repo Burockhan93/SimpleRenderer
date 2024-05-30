@@ -1,3 +1,7 @@
+#include <cmath>
+#include <cstdlib>
+#include "geometry.h"
+
 #include "tgaimage.h"
 
 #include "Model.h"
@@ -9,11 +13,12 @@
 #define FILEPATHKELLY "obj/kelly_belly.obj"
 #define FILEPATHKELLYWIRE "kelly_belly_wireframe.tga"
 #define FILEPATHKELLYSHADER "kelly_belly_shaded.tga"
-//#define OLD
+#define OLD
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red = TGAColor(255, 0, 0, 255);
 const TGAColor green = TGAColor(0, 255, 0, 255);
+const TGAColor blue = TGAColor(0, 0, 255, 255);
 Model* model = NULL;
 const int width = 2000;
 const int height = 2000;
@@ -76,58 +81,76 @@ void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
     }
 }
 
-Vec3f barycentric(Vec2i* pts, Vec2i P) {
-    //Using barycentric coordinates we could determine the exact location of a point in relation to a triangle it is inside of
-    Vec3f u = Vec3f(pts[2][0] - pts[0][0], pts[1][0] - pts[0][0], pts[0][0] - P[0]) ^ Vec3f(pts[2][1] - pts[0][1], pts[1][1] - pts[0][1], pts[0][1] - P[1]);
-    if (std::abs(u.z) < 1) return Vec3f(-1, 1, 1);
-    return Vec3f(1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
+Vec3f barycentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P) {
+    Vec3f s[2];
+    //https://www.youtube.com/watch?v=HYAgJN3x4GA barycentric coordinates
+    for (int i = 2; i--; ) {
+        s[i][0] = C[i] - A[i];
+        s[i][1] = B[i] - A[i];
+        s[i][2] = A[i] - P[i];
+    }
+    Vec3f u = cross(s[0], s[1]);
+    if (std::abs(u[2]) > 1e-2) 
+        return Vec3f(1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
+    return Vec3f(-1, 1, 1);
 }
-void triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage& image, TGAColor color) {
-    if (t0.y == t1.y && t0.y == t2.y) return; //This doesnt build a triangle, discard
-    //Order them from top to bottom.P(0,0) is bottom left.
-    if (t0.y > t1.y) std::swap(t0, t1);
-    if (t0.y > t2.y) std::swap(t0, t2);
-    if (t1.y > t2.y) std::swap(t1, t2);
-    //Total height is important for bounding box.
-    int total_height = t2.y - t0.y;
-    for (int i = 0; i < total_height; i++) {
-        bool second_half = i > t1.y - t0.y || t1.y == t0.y;
-        int segment_height = second_half ? t2.y - t1.y : t1.y - t0.y;
-        float alpha = (float)i / total_height;
-        float beta = (float)(i - (second_half ? t1.y - t0.y : 0)) / segment_height; // be careful: with above conditions no division by zero here
-        Vec2i A = t0 + (t2 - t0) * alpha;
-        Vec2i B = second_half ? t1 + (t2 - t1) * beta : t0 + (t1 - t0) * beta;
-        if (A.x > B.x) std::swap(A, B);
-        for (int j = A.x; j <= B.x; j++) {
-            image.set(j, t0.y + i, color); // attention, due to int casts t0.y+i != A.y
+
+
+void triangle(Vec3f* pts, float* zbuffer, TGAImage& image, TGAColor color ) {
+
+    Vec2f bboxmin(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+    Vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+    Vec2f clamp(image.get_width() - 1, image.get_height() - 1);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            bboxmin[j] = std::max(0.f, std::min(bboxmin[j], pts[i][j]));
+            bboxmax[j] = std::min(clamp[j], std::max(bboxmax[j], pts[i][j]));
         }
     }
-}
-void triangle(Vec2i* pts, TGAImage& image, TGAColor color) {
-
-    //Find the bounding box, 0,0 is bottom left
-    Vec2i bboxmin{ image.get_width() - 1, image.get_height() - 1 };
-    Vec2i bboxmax{0, 0};
-    Vec2i clamp{ image.get_width() - 1,image.get_height() - 1 };
-    for (int i{ 0 }; i < 3; i++) {
-        bboxmin.x = std::max(0, std::min(bboxmin.x, pts[i].x));
-        bboxmin.y = std::max(0, std::min(bboxmin.x, pts[i].x));
-
-        bboxmax.x = std::min(clamp.x, std::max(bboxmax.x, pts[i].x));
-        bboxmax.y = std::min(clamp.y, std::max(bboxmax.y, pts[i].y));
-    }
-    //Find the raster point
-    Vec2i P{};
+    Vec3f P;
     for (P.x = bboxmin.x; P.x <= bboxmax.x; P.x++) {
         for (P.y = bboxmin.y; P.y <= bboxmax.y; P.y++) {
-            Vec3f bc_screen = barycentric(pts, P);
+            Vec3f bc_screen = barycentric(pts[0], pts[1], pts[2], P);
             if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z < 0) continue;
-            image.set(P.x, P.y, color);
+            //We give a virtual z buffer to point P
+            P.z = 0;
+            for (int i = 0; i < 3; i++) P.z += pts[i][2] * bc_screen[i];
+            if (zbuffer[int(P.x + P.y * width)] < P.z) {
+                zbuffer[int(P.x + P.y * width)] = P.z;
+                image.set(P.x, P.y, color);
+            }
         }
     }
+
+}
+
+void rasterize(Vec2i p0, Vec2i p1, TGAImage& image, TGAColor color, int ybuffer[]) {
+
+    //determine the lefter point
+    if (p0.x > p1.x) {
+        std::swap(p0, p1);
+    }
+
+    for (int x = p0.x; x <= p1.x; x++)
+    {
+        //interpolate between p0.x and p1.x
+        float t = (x - p0.x) / static_cast<float>(p1.x - p0.x);
+        //check the value on y buffer. for testing they are all set to infinite minus. 
+        int y = p0.y*(1 - t) + p1.y * t;
+        if (ybuffer[x] < y) {
+            ybuffer[x] = y;
+            image.set(x, 0, color);
+        }
+    }
+
+}
+//from world coordinates of 3D obj to screen in 2D
+Vec3f world2screen(Vec3f v) {
+    return Vec3f(int((v.x + 1.) * width / 2. + .5), int((v.y + 1.) * height / 2. + .5), v.z);
 }
 
 int main(int argc, char** argv) {
+    model = new Model(FILEPATH);
 #ifndef OLD
     model = new Model(FILEPATH);
 
@@ -169,14 +192,33 @@ int main(int argc, char** argv) {
     image.write_tga_file(FILEPATHSHADELIGHT);
     delete model;
 
-	
-#endif
     TGAImage frame(200, 200, TGAImage::RGB);
     Vec2i pts[3] = { Vec2i(10,10), Vec2i(100, 30), Vec2i(190, 160) };
     triangle(pts, frame, TGAColor(255, 0, 0,255));
     frame.flip_vertically(); // to place the origin in the bottom left corner of the image 
     frame.write_tga_file("framebuffer.tga");
     return 0;
+	
+#endif
+    TGAImage image(width, height, TGAImage::RGB);
 
+    
+    //create a zbuffer and fill it
+    float* zbuffer = new float[width*height];
+    for (int i = width * height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
+
+
+    for (size_t i = 0; i < model->nfaces(); i++)
+    {
+        std::vector<int> face = model->face(i);
+        Vec3f pts[3];
+        for (int i{ 0 }; i < 3; i++) pts[i] = world2screen(model->vert(face[i]));
+        triangle(pts, zbuffer, image, TGAColor(rand() % 255, rand() % 255, rand() % 255, 255));
+    }
+
+
+    image.flip_vertically();
+    image.write_tga_file("example1.tga");
+    delete model;
 	return 0;
 }
