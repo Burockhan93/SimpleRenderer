@@ -207,18 +207,23 @@ int main(int argc, char** argv) {
     float* zbuffer = new float[width*height];
     for (int i = width * height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
 
-
+    Vec3f lightDir{ 0,0,-1 };
+    
     for (size_t i = 0; i < model->nfaces(); i++)
     {
         std::vector<int> face = model->face(i);
         Vec3f pts[3];
         for (int i{ 0 }; i < 3; i++) pts[i] = world2screen(model->vert(face[i]));
-        triangle(pts, zbuffer, image, TGAColor(rand() % 255, rand() % 255, rand() % 255, 255));
+        //use 3d coordinates to determina surface angle, and normalize it. This will give us light intensity at that triangle
+        Vec3f n = cross((model->vert(face[2]) - model->vert(face[0])), (model->vert(face[1]) - model->vert(face[0])));
+        n.normalize();
+        float intensity = n * lightDir;
+        triangle(pts, zbuffer, image, TGAColor(intensity *255, intensity*255, intensity*255, 255));
     }
 
 
     image.flip_vertically();
-    image.write_tga_file("example1.tga");
+    image.write_tga_file("example2.tga");
     delete model;
 	return 0;
 }

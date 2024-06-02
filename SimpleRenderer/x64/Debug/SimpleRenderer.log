@@ -1,5 +1,4 @@
-﻿  Model.cpp
-  SimpleRenderer.cpp
+﻿  SimpleRenderer.cpp
 F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(41,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(103,59): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
@@ -32,6 +31,8 @@ F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(149,21)
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(213,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(214,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(220,88): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(220,73): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(220,58): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe
