@@ -34,7 +34,7 @@ struct TGAColor {
 	int bytespp;
 
 	TGAColor() : val {0}, bytespp{1}{}
-	TGAColor(unsigned char R, unsigned char G, unsigned char B, unsigned char A) : b{B},g{G},r{R},a{A}{}
+	TGAColor(unsigned char R, unsigned char G, unsigned char B, unsigned char A=255) : b{B},g{G},r{R},a{A}{}
 	TGAColor(unsigned int v, int bpp) :val{ v }, bytespp { bpp }{}
 	//copy constructor
 	TGAColor(const TGAColor &c) : val{c.val}, bytespp{c.bytespp}{}
@@ -43,7 +43,7 @@ struct TGAColor {
 			raw[i] = p[i];
 		}
 	}
-
+	//copy assignment
 	TGAColor& operator=(const TGAColor& c) {
 		if (this != &c) {
 			bytespp = c.bytespp;

@@ -1,38 +1,87 @@
 ﻿  SimpleRenderer.cpp
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(41,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(103,59): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(72,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(133,59): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(103,35): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(133,35): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(120,33): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(150,33): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(120,28): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(150,28): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(139,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(149,56): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(169,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(180,56): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(149,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(180,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(214,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(220,88): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(220,73): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(220,58): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(191,22): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(194,28): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(202,20): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(203,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(206,21): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(208,33): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,96): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,75): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,54): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,33): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,28): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(64,41): warning C4244: '*=': conversion from 'const U' to 'T', possible loss of data
+          with
+          [
+              U=float
+          ]
+          and
+          [
+              T=int
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(199,46): message : see reference to function template instantiation 'vec<2,int> operator *<2,int,float>(vec<2,int>,const U &)' being compiled
+          with
+          [
+              U=float
+          ]
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe
