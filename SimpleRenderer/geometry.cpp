@@ -1,7 +1,20 @@
+#include <vector>
+#include <cassert>
+#include <cmath>
+#include <iostream>
 #include "geometry.h"
 
-template<> template<> vec<3,int>::vec(const vec<3,float>& v) : x(int(v.x+0.5f)),y(int(v.y+0.5f)),z(int(v.z+0.5f)){}
-template<> template<> vec<3,float>::vec(const vec<3,int>& v) : x(v.x),y(v.y),z(v.z){}
+
+template <> Vec3<float>::Vec3(Matrix m) : x{ m[0][0] / m[3][0] }, y{ m[1][0] / m[3][0] }, z{ m[2][0] / m[3][0] } {}
+template <> template <> Vec3<int>::Vec3(const Vec3<float>& v) : x(int(v.x + .5)), y(int(v.y + .5)), z(int(v.z + .5)) {}
+template <> template <> Vec3<float>::Vec3(const Vec3<int>& v) : x(v.x), y(v.y), z(v.z) {}
+
+//create 4x1 matrix with every element set to 1. Then set the elemnts based on Vector
+Matrix::Matrix(Vec3f v) : m(std::vector<std::vector<float> >(4, std::vector<float>(1, 1.f))), rows(4), columns(1) {
+    m[0][0] = v.x;
+    m[1][0] = v.y;
+    m[2][0] = v.z;
+}
 
 
 Matrix::Matrix(int r, int c) : m(std::vector<std::vector<float> >(r, std::vector<float>(c, 0.f))), rows(r), columns(c) { }
@@ -23,7 +36,7 @@ Matrix Matrix::identity(int dimension) {
 
 	for (int i{ 0 }; i < dimension; i++) {
 
-		for (int j{ 0 }; i < dimension; i++) {
+		for (int j{ 0 }; j < dimension; j++) {
 			I[i][j] = i==j ? 1.0f : 0.0f;
 		}
 	}
@@ -41,7 +54,7 @@ const std::vector<float>& Matrix::operator[](const int i) const {
 
 Matrix Matrix::operator*(const Matrix& a) {
 
-	assert(columns == a.rows,"Column - Row mismatch");
+	assert(columns == a.rows,"Column - Row missmatch");
 	Matrix result{ rows,a.columns };
 	for (size_t i = 0; i < rows; i++)
 	{

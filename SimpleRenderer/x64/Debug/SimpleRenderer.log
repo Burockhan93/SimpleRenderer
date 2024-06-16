@@ -1,87 +1,34 @@
-﻿  SimpleRenderer.cpp
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(72,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(133,59): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+﻿  geometry.cpp
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(10,66): warning C4244: 'initializing': conversion from 'const t' to 't', possible loss of data
           with
           [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(133,35): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(150,33): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(150,28): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(169,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(180,56): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(180,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(191,22): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(194,28): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(202,20): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(203,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(206,21): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(208,33): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,96): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,75): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,54): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,33): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(210,28): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(64,41): warning C4244: '*=': conversion from 'const U' to 'T', possible loss of data
-          with
-          [
-              U=float
+              t=int
           ]
           and
           [
-              T=int
+              t=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(199,46): message : see reference to function template instantiation 'vec<2,int> operator *<2,int,float>(vec<2,int>,const U &)' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(10,74): warning C4244: 'initializing': conversion from 'const t' to 't', possible loss of data
           with
           [
-              U=float
+              t=int
           ]
+          and
+          [
+              t=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(10,82): warning C4244: 'initializing': conversion from 'const t' to 't', possible loss of data
+          with
+          [
+              t=int
+          ]
+          and
+          [
+              t=float
+          ]
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(47,2): warning C4002: too many arguments for function-like macro invocation 'assert'
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(51,5): warning C4002: too many arguments for function-like macro invocation 'assert'
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(57,2): warning C4002: too many arguments for function-like macro invocation 'assert'
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(81,12): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(87,5): warning C4002: too many arguments for function-like macro invocation 'assert'
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe

@@ -11,10 +11,8 @@ TGAImage::TGAImage(int width, int height, int bpp) : data{ NULL }, width{ width 
 	memset(data, 0, nbytes);
 }
 
-TGAImage::TGAImage(const TGAImage& img) {
-	width = img.width;
-	height = img.height;
-	bytespp = img.bytespp;
+TGAImage::TGAImage(const TGAImage& img) : data { NULL }, width{ img.width }, height{ img.height }, bytespp{ img.bytespp }{
+	
 	unsigned long nbytes = width * height * bytespp;
 	data = new unsigned char[nbytes];
 	memset(data, 0, nbytes);
@@ -92,10 +90,12 @@ bool TGAImage::read_tga_file(const char* filename) {
 		return false;
 	}
 
-	if (!(header.imagedescriptor & 0x20)) {
+	if (!(header.imagedescriptor & 0x20))//32 in int value
+	{
 		flip_vertically();
 	}
-	if (header.imagedescriptor & 0x10) {
+	if (header.imagedescriptor & 0x10)//16 in int value
+	{
 		flip_horizontally();
 	}
 	std::cerr << width << "x" << height << "/" << bytespp * 8 << "\n";
@@ -118,13 +118,13 @@ bool TGAImage::load_rle_data(std::ifstream& in) {
 		if (chunkheader < 128) {
 			chunkheader++;
 			for (int i = 0; i < chunkheader; i++) {
-				in.read((char*)colorbuffer.raw, bytespp);
+				in.read((char*)colorbuffer.val, bytespp);
 				if (!in.good()) {
 					std::cerr << "an error occured while reading the header\n";
 					return false;
 				}
 				for (int t = 0; t < bytespp; t++)
-					data[currentbyte++] = colorbuffer.raw[t];
+					data[currentbyte++] = colorbuffer.val[t];
 				currentpixel++;
 				if (currentpixel > pixelcount) {
 					std::cerr << "Too many pixels read\n";
@@ -134,14 +134,14 @@ bool TGAImage::load_rle_data(std::ifstream& in) {
 		}
 		else {
 			chunkheader -= 127;
-			in.read((char*)colorbuffer.raw, bytespp);
+			in.read((char*)colorbuffer.val, bytespp);
 			if (!in.good()) {
 				std::cerr << "an error occured while reading the header\n";
 				return false;
 			}
 			for (int i = 0; i < chunkheader; i++) {
 				for (int t = 0; t < bytespp; t++)
-					data[currentbyte++] = colorbuffer.raw[t];
+					data[currentbyte++] = colorbuffer.val[t];
 				currentpixel++;
 				if (currentpixel > pixelcount) {
 					std::cerr << "Too many pixels read\n";
@@ -258,13 +258,15 @@ TGAColor TGAImage::get(int x, int y) {
 	if (!data || x < 0 || y < 0 || x >= width || y >= height) {
 		return TGAColor{};
 	}
+	return TGAColor{ data + (x + y * width) * bytespp, (unsigned char)bytespp };
 }
 bool TGAImage::set(int x, int y, TGAColor c) {
 	if (!data || x < 0 || y < 0 || x >= width || y >= height) {
 		return false;
 	}
 	//destination,source,size. we are setting pixel by pixel so data + x+ywidth gives us a destination pixel
-	memcpy(data + (x + y * width) * bytespp, c.raw, bytespp);
+	memcpy(data + (x + y * width) * bytespp, c.val, bytespp);
+	return true;
 }
 int TGAImage::get_bytespp() {
 	return bytespp;
