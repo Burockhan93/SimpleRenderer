@@ -25,6 +25,7 @@ struct TGAColor {
 	unsigned char val[4];
 	unsigned char bytespp;
 
+	//brace initalization causes some problems, due to narrowing restirctions
 	TGAColor() : val (), bytespp(1)
 	{
 		for (int i = 0; i < 4; i++) val[i] = 0;
@@ -69,6 +70,8 @@ struct TGAColor {
 		}
 		return *this;
 	}
+	unsigned char& operator[](const int i) { return val[i]; }
+
 	TGAColor operator *(float intensity) const {
 		TGAColor res = *this;
 		intensity = (intensity > 1.f ? 1.f : (intensity < 0.f ? 0.f : intensity));
@@ -104,7 +107,9 @@ public:
 	bool flip_vertically();
 	bool scale(int w, int h);
 	TGAColor get(int x, int y);
-	bool set(int x, int y, TGAColor c);
+	//bool set(int x, int y, TGAColor c);
+	bool set(int x, int y, const TGAColor& c);
+	bool set(int x, int y, TGAColor& c);
 	~TGAImage();
 	//assignment operator
 	TGAImage& operator =(const TGAImage& img);

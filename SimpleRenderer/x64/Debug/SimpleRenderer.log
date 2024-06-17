@@ -1,34 +1,26 @@
-﻿  geometry.cpp
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(10,66): warning C4244: 'initializing': conversion from 'const t' to 't', possible loss of data
+﻿  Model.cpp
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\tgaimage.h(78,51): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\Model.cpp(89,67): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
-              t=int
+              T=float
           ]
           and
           [
-              t=float
+              T=int
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(10,74): warning C4244: 'initializing': conversion from 'const t' to 't', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\Model.cpp(89,29): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
-              t=int
+              T=float
           ]
           and
           [
-              t=float
+              T=int
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(10,82): warning C4244: 'initializing': conversion from 'const t' to 't', possible loss of data
-          with
-          [
-              t=int
-          ]
-          and
-          [
-              t=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(47,2): warning C4002: too many arguments for function-like macro invocation 'assert'
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(51,5): warning C4002: too many arguments for function-like macro invocation 'assert'
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(57,2): warning C4002: too many arguments for function-like macro invocation 'assert'
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(81,12): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.cpp(87,5): warning C4002: too many arguments for function-like macro invocation 'assert'
+  SimpleRenderer.cpp
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\tgaimage.h(78,51): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+  tgaimage.cpp
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\tgaimage.h(78,51): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+  Generating Code...
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe

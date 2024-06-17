@@ -4,6 +4,45 @@
 #include <cmath>
 #include <vector>
 
+template<size_t Dimcols, size_t DimRows, typename T> class mat;
+
+//general framwork for vectors from all dimensions
+template<size_t DIM, typename T> struct vec {
+    vec()
+    { 
+        for (size_t i{ DIM }; i >= 0; i--) {
+            data_[i] = T();
+        }
+    }
+    T& operator[](const size_t i) { assert(i < DIM); return data_[i]; }
+    const T& operator[](const size_t i) const { assert(i < DIM); return data_[i]; }
+private:
+    T data_[DIM];
+};
+
+//
+template<typename T> struct vec<2, T> {
+   T x, y; 
+   vec(): x (T()), y (T()){}
+   vec(T _x, T _y) : x(_x), y(_y){}
+   //instantiate with different class
+   template <class U> vec<2, T>(const vec<2, U>& v);
+   T& operator[](const int index) { return index == 0 ? x : y; }
+   const T& operator[](const int index) const { return index == 0 ? x : y; }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Forward declare matrix
 class Matrix;
 
