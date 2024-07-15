@@ -21,7 +21,7 @@ TGAImage::~TGAImage() {
 	if (data) delete[] data;
 }
 
-//Assignemnt
+//Copy Assignemnt
 TGAImage& TGAImage::operator =(const TGAImage& img) {
 	if (this != &img) {
 		if (data) delete[] data;

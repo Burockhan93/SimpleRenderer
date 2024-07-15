@@ -1,12 +1,11 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+
 #include "geometry.h"
-
-
 #include "tgaimage.h"
-
 #include "Model.h"
+#include "simpleGL.h"
 
 #define FILEPATH "obj/african_head.obj"
 #define FILEPATHWIRE "african_wireframe.tga"
@@ -24,123 +23,103 @@ const TGAColor blue = TGAColor(0, 0, 255, 255);
 
 //Scene
 Model* model = nullptr;
- int width = 800;
- int height = 800;
- int depth = 255;
+const int width = 800;
+const int height = 800;
+
 Vec3f lightDir = Vec3f{ 1,-1,1 }.normalize(); 
 Vec3f camera{ 1,1,3 };
 Vec3f center{}; //Set center to zero
-int* zbuffer = nullptr;
+Vec3f up{ 0,1,0 };
 
-//Viewport matrix
-Matrix viewport(int x, int y, int w, int h) {
-    Matrix m = Matrix::identity(4);
-    m[0][3] = x + w / 2.0f;
-    m[1][3] = y + h / 2.0f;
-    m[2][3] = depth / 2.0f;
 
-    m[0][0] = w / 2.f;
-    m[1][1] = h / 2.f;
-    m[2][2] = depth / 2.f;
-    return m;
-}
 
-//given the up vector, calculate the transformation matrix based on cam location
-Matrix lookat(Vec3f eye, Vec3f center, Vec3f up) {
-    Vec3f z = (eye - center).normalize();
-    Vec3f x = (up ^ z).normalize();//x is vertical to up and z.
-    Vec3f y = (z ^ x).normalize();//y is vertical to x and z, the order is important
-    Matrix res = Matrix::identity(4);
-    for (int i{ 0 }; i < 3; i++) {
-        res[0][i] = x[i];
-        res[1][i] = y[i];
-        res[2][i] = z[i];
-        res[0][i] = x[i];
-        res[i][3] = -center[i];
+struct Shader : public IShader {
+    Vec3f varying_intensiyt;
+    mat<2, 3, float> varying_uv;
+    mat<4, 4, float> ProjectionModelView;
+    mat<4, 4, float> ProjectionModelViewTranspose;
+
+
+    virtual Vec4f vertex(int iface, int nthvert) {
+        varying_intensiyt[nthvert] = std::max(.0f, model->norm(iface, nthvert) * lightDir);
+        varying_uv.set_col(nthvert, model->uv(iface, nthvert));
+        Vec4f gl_Vertex = embed<4>(model->vert(iface, nthvert));
+        return Viewport * Projection * ModelView * gl_Vertex;
     }
-    return res;
 
-}
-
-int counter{ 0 };
-void triangle(Vec3i t0, Vec3i t1, Vec3i t2, float ity0, float ity1, float ity2, TGAImage& image, int* zbuffer) {
-    if (t0.y == t1.y && t0.y == t2.y) return; //doesnt make a triangle
-    //Order the vertices from top to bottom
-    if (t0.y > t1.y) { std::swap(t0, t1); std::swap(ity0, ity1); }
-    if (t0.y > t2.y) { std::swap(t0, t2); std::swap(ity0, ity2); }
-    if (t1.y > t2.y) { std::swap(t1, t2); std::swap(ity1, ity2); }
-
-    int total_height = t2.y - t0.y;
-    for (int i = 0; i < total_height; i++) {
-        bool second_half = i > t1.y - t0.y || t1.y == t0.y;
-        int segment_height = second_half ? t2.y - t1.y : t1.y - t0.y;
-        float alpha = (float)i / total_height;
-        float beta = (float)(i - (second_half ? t1.y - t0.y : 0)) / segment_height;
-        Vec3i A = t0 + Vec3f(t2 - t0) * alpha;
-        Vec3i B = second_half ? t1 + Vec3f(t2 - t1) * beta : t0 + Vec3f(t1 - t0) * beta;
-        float ityA = ity0 + (ity2 - ity0) * alpha;
-        float ityB = second_half ? ity1 + (ity2 - ity1) * beta : ity0 + (ity1 - ity0) * beta;
-        if (A.x > B.x)
-        {
-            std::swap(A, B); std::swap(ityA, ityB);
-        }
-        for (int j = A.x; j <= B.x; j++) {
-            float phi = B.x == A.x ? 1.0f : (float)(j - A.x) / (float)(B.x - A.x);
-            Vec3i   P = Vec3f(A) + Vec3f(B - A) * phi;
-            float ityP = ityA + (ityB - ityA) * phi;
-            int idx = P.x + P.y * width;
-            if (P.x >= width || P.y >= height || P.x < 0 || P.y < 0) continue;
-            if (zbuffer[idx] < P.z) {
-                zbuffer[idx] = P.z;
-                image.set(P.x, P.y, TGAColor(255, 255, 255) * ityP);
-                counter++;
-            }
-        }
+    virtual bool fragment(Vec3f bar, TGAColor& color) {
+        float intensity = varying_intensiyt * bar;
+        Vec2f uv = varying_uv * bar;   
+        Vec3f n = proj<3>(ProjectionModelView * embed<4>(model->norm(uv))).normalize();
+        Vec3f l = proj<3>(ProjectionModelView * embed<4>(lightDir)).normalize();
+        Vec3f r = (n * (n * l * 2.f) - l).normalize(); //Phong shading reflection light
+        float spec = pow(std::max(r.z, 0.0f), model->specular(uv));
+        float diff = std::max(0.f, n * l);
+        TGAColor c = model->diffuse(uv);
+        color = c;
+        for (int i = 0; i < 3; i++) color[i] = std::min<float>(5 + c[i] * (diff + .6 * spec), 255);
+        for (int i = 0; i < 3; i++) color[i] = std::min<float>(5 + c[i] * (diff + 1 * spec), 255);
+        return false;
     }
-}
+
+
+};
+
+struct GouraudShader : public IShader {
+    Vec3f varying_intensity; 
+
+    //We have two shader per usual. Vertex and Color
+    virtual Vec4f vertex(int iface, int nthvert) {
+        //get a lightning value for eac vertex as well
+        varying_intensity[nthvert] = std::max(0.f, model->norm(iface, nthvert) * lightDir);
+        //we need 4*4 matrice for mvp computation, so we draw the vertice from model
+        //add the last one as 1
+        Vec4f gl_Vertex = embed<4>(model->vert(iface, nthvert)); 
+        //after that we project it to screen
+        gl_Vertex = Viewport * Projection * ModelView * gl_Vertex;          
+        return gl_Vertex;
+    }
+
+    virtual bool fragment(Vec3f bar, TGAColor& color) {
+        float intensity = varying_intensity * bar;
+        if (intensity > .75f) intensity = .9f;
+        else if (intensity > .50f) intensity = .8f;
+        else if (intensity > .25f) intensity = .3f;
+        color = TGAColor(100, 0, 255) * intensity; 
+        return false; 
+    }
+};
+
 
 int main(int argc, char** argv) {
     model = new Model(FILEPATH);
     
-    zbuffer = new int[width*height];
-    for (int i{ 0 }; i < width * height; i++)
-    {
-        zbuffer[i] = std::numeric_limits<int>::min();
-    }
+    lookat(camera, center, up);
+    viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
+    projection(-1.f / (camera - center).norm());
+    lightDir.normalize();
 
-    { // draw the model
-        Matrix ModelView = lookat(camera, center, Vec3f{ 0, 1, 0 }); //Up vector must be given
-        Matrix Projection = Matrix::identity(4);
-        Matrix ViewPort = viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
-        Projection[3][2] = -1.f / (camera - center).norm();
+    TGAImage image(width, height, TGAImage::RGB);
+    TGAImage zbuffer(width, height, TGAImage::GRAYSCALE);
 
-        std::cerr << ModelView << std::endl;
-        std::cerr << Projection << std::endl;
-        std::cerr << ViewPort << std::endl;
-        Matrix z = (ViewPort * Projection * ModelView);
-        std::cerr << z << std::endl;
-
-        TGAImage image(width, height, TGAImage::RGB);
-        for (int i = 0; i < model->nfaces(); i++) {
-            std::vector<int> face = model->face(i);
-            Vec3i screen_coords[3];
-            Vec3f world_coords[3];
-            float intensity[3];
-            for (int j = 0; j < 3; j++) {
-                Vec3f v = model->vert(face[j]);
-                screen_coords[j] = Vec3f(ViewPort * Projection * ModelView * Matrix(v));
-                world_coords[j] = v;
-                intensity[j] = model->norm(i, j) * lightDir;
-            }
-            triangle(screen_coords[0], screen_coords[1], screen_coords[2], intensity[0], intensity[1], intensity[2], image, zbuffer);
+    Shader shader;
+    shader.ProjectionModelView = Projection * ModelView;
+    shader.ProjectionModelViewTranspose = shader.ProjectionModelView.invert_transpose();
+    for (int i = 0; i < model->nfaces(); i++) {
+        Vec4f screen_coords[3];
+        for (int j = 0; j < 3; j++) {
+            screen_coords[j] = shader.vertex(i, j);
         }
-        image.flip_vertically(); // Origin at bottom left
-        image.write_tga_file("output.tga");
+        triangulate(screen_coords, shader, image, zbuffer);
     }
 
+    image.flip_vertically(); // to place the origin in the bottom left corner of the image
+    zbuffer.flip_vertically();
+    image.write_tga_file("output.tga");
+    zbuffer.write_tga_file("zbuffer.tga");
    
     
     delete model;
-    delete[] zbuffer;
+   
 	return 0;
 }
