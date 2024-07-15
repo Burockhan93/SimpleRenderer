@@ -136,6 +136,7 @@
     <ClCompile Include="tgaimage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="simpleGL.h" />
