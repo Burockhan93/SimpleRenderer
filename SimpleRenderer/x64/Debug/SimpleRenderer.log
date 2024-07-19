@@ -1,77 +1,43 @@
 ﻿  SimpleRenderer.cpp
 F:\Programming\Projects\SimpleRenderer\SimpleRenderer\tgaimage.h(78,51): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(47,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(55,67): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(80,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(88,67): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(55,63): warning C4244: '=': conversion from 'const _Ty' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(88,63): warning C4244: '=': conversion from 'const _Ty' to 'unsigned char', possible loss of data
           with
           [
               _Ty=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(161,39): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(159,1): message : while compiling class template member function 'void mat<2,3,float>::set_col(size_t,vec<2,float>)'
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(37,30): message : see reference to function template instantiation 'void mat<2,3,float>::set_col(size_t,vec<2,float>)' being compiled
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(28,22): message : see reference to class template instantiation 'mat<2,3,float>' being compiled
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(178,47): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(175,35): message : while compiling class template member function 'mat<2,2,T> mat<3,3,T>::get_minor(size_t,size_t) const'
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(171,96): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(183,9): message : see reference to function template instantiation 'mat<2,2,T> mat<3,3,T>::get_minor(size_t,size_t) const' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(171,93): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(29,22): message : see reference to class template instantiation 'mat<3,3,T>' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(175,70): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(175,57): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(175,44): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(162,39): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(160,1): message : while compiling class template member function 'void mat<2,3,float>::set_col(size_t,vec<2,float>)'
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(70,30): message : see reference to function template instantiation 'void mat<2,3,float>::set_col(size_t,vec<2,float>)' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(61,22): message : see reference to class template instantiation 'mat<2,3,float>' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(56,102): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(44,32): message : see reference to function template instantiation 'vec<2,float> operator *<2,float,float>(vec<2,float>,const U &)' being compiled
           with
           [
-              T=float
+              U=float
           ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(124,35): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(122,1): message : while compiling class template member function 'T dt<2,T>::det(const mat<2,2,T> &)'
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(172,9): message : see reference to function template instantiation 'T dt<2,T>::det(const mat<2,2,T> &)' being compiled
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(172,28): message : see reference to class template instantiation 'dt<2,T>' being compiled
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(171,1): message : while compiling class template member function 'T mat<2,2,T>::det(void) const'
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(183,9): message : see reference to function template instantiation 'T mat<2,2,T>::det(void) const' being compiled
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(183,1): message : see reference to class template instantiation 'mat<2,2,T>' being compiled
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(182,1): message : while compiling class template member function 'T mat<3,3,T>::cofactor(size_t,size_t) const'
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(124,39): message : see reference to function template instantiation 'T mat<3,3,T>::cofactor(size_t,size_t) const' being compiled
-          with
-          [
-              T=float
-          ]
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(210,145): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(48,1): message : see reference to function template instantiation 'vec<2,float> operator *<2,3,float>(const mat<2,3,float> &,const vec<3,float> &)' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(74,100): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(44,32): message : see reference to function template instantiation 'vec<2,float> operator +<2,float>(vec<2,float>,const vec<2,float> &)' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(83,100): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(48,34): message : see reference to function template instantiation 'vec<2,float> operator -<2,float>(vec<2,float>,const vec<2,float> &)' being compiled
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\geometry.h(211,145): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+F:\Programming\Projects\SimpleRenderer\SimpleRenderer\SimpleRenderer.cpp(81,1): message : see reference to function template instantiation 'vec<2,float> operator *<2,3,float>(const mat<2,3,float> &,const vec<3,float> &)' being compiled
   SimpleRenderer.vcxproj -> F:\Programming\Projects\SimpleRenderer\x64\Debug\SimpleRenderer.exe

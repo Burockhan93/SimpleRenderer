@@ -27,6 +27,7 @@ template<typename T> struct vec<2, T> {
    vec(T _x, T _y) : x(_x), y(_y){}
    //instantiate with different class
    template <class U> vec<2, T>(const vec<2, U>& v);
+   float norm() { return std::sqrt(x * x + y * y); }
    T& operator[](const int index) { return index == 0 ? x : y; }
    const T& operator[](const int index) const { return index == 0 ? x : y; }
 };
@@ -200,7 +201,7 @@ public:
     }
     mat<DimCols, DimRows, T> transpose() {
         mat<DimCols, DimRows, T> ret;
-        for (size_t i = DimRows; i--; ret[i] = this->col(i));
+        for (size_t i = DimCols; i--; ret[i] = this->col(i));
         return ret;
     }
 };

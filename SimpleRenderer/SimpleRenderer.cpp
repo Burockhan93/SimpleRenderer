@@ -1,6 +1,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <numbers>
 #include "geometry.h"
 #include "tgaimage.h"
 #include "Model.h"
@@ -19,7 +20,39 @@ Vec3f camera{ 1,1,4 };
 Vec3f center{}; //Set center to zero
 Vec3f up{ 0,1,0 };
 
+struct ZShader : public IShader {
+    mat<4, 3, float> varying_tri;
+    virtual Vec4f vertex( int nthface, int nthvertex) {
 
+        Vec4f gl_vertex = Projection * ModelView * embed<4>(model->vert(nthface, nthvertex));
+        varying_tri.set_col(nthvertex, gl_vertex);
+        return gl_vertex;
+
+    }
+
+    virtual bool fragment(Vec3f gl_FragCoord, Vec3f bar, TGAColor& color) {
+
+        color = TGAColor(0, 0, 0);
+        return false;
+    }
+};
+float max_elevation_angle(float* zbuffer, Vec2f p, Vec2f dir) {
+
+    //Get the elevation from 2d image a.k.a zBuffer
+    float maxangle = 0;
+    for (float t = 0.; t < 1000.; t += 1.) {
+        Vec2f cur = p + dir * t; //increase the steps in the direction of vector dir
+        //Check if we are still i the image
+        if (cur.x >= width || cur.y >= height || cur.x < 0 || cur.y < 0) return maxangle;
+        //discard if the change is trivial
+        float distance = (p - cur).norm();
+        if (distance < 1.f) continue;
+        //calculate the elevation based on zBuffer
+        float elevation = zbuffer[int(cur.x) + int(cur.y) * width] - zbuffer[int(p.x) + int(p.y) * width];
+        maxangle = std::max(maxangle, atanf(elevation / distance));
+    }
+    return maxangle;
+}
 
 struct Shader : public IShader {
 
@@ -94,6 +127,7 @@ struct GouraudShader : public IShader {
     }
 
     virtual bool fragment(Vec3f bar, TGAColor& color) {
+        //Toon Shading
         float intensity = varying_intensity * bar;
         if (intensity > .75f) intensity = .9f;
         else if (intensity > .50f) intensity = .8f;
@@ -107,56 +141,47 @@ struct GouraudShader : public IShader {
 int main(int argc, char** argv) {
     model = new Model(FILEPATH);
     
+    //Create and fill zBuffer
     float* zBuffer = new float[width * height];
-    shadowbuffer = new float[width * height];
-    for (int i = width * height; --i; ) {
-        zBuffer[i] = shadowbuffer[i] = -std::numeric_limits<float>::max();
-    }
-
-    //Shadow
-    {
-        TGAImage depth(width, height, TGAImage::RGB);
-        lookat(lightDir, center, up);
-        viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
-        projection(0);
-
-        DepthShader depthshader;
-        Vec4f screen_coords[3];
-        for (int i = 0; i < model->nfaces(); i++) {
-            for (int j = 0; j < 3; j++) {
-                screen_coords[j] = depthshader.vertex(i, j);
-            }
-            triangulate(screen_coords, depthshader, depth, shadowbuffer);
-        }
-        depth.flip_vertically(); // to place the origin in the bottom left corner of the image
-        depth.write_tga_file("depth.tga");
-    }
-
-    //FRame
-    Matrix M = Viewport * Projection * ModelView;
-    {
-        TGAImage frame(width, height, TGAImage::RGB);
-        lookat(camera, center, up);
-        viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
-        projection(-1.f / (camera - center).norm());
-
-        Shader shader(ModelView, (Projection * ModelView).invert_transpose(), M * (Viewport * Projection * ModelView).invert());
-        Vec4f screen_coords[3];
-        for (int i = 0; i < model->nfaces(); i++) {
-            for (int j = 0; j < 3; j++) {
-                screen_coords[j] = shader.vertex(i, j);
-            }
-            triangulate(screen_coords, shader, frame, zBuffer);
-        }
-        frame.flip_vertically(); // to place the origin in the bottom left corner of the image
-        frame.write_tga_file("framebuffer.tga");
-    }
+    for (int i = width * height; i--; zBuffer[i] = -std::numeric_limits<float>::max());
    
+
+    TGAImage frame(width, height, TGAImage::RGB);
+    lookat(camera, center, up);
+    viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
+    projection(-1.f / (camera - center).norm());
+
+    ZShader zShader;
+
+    for (int i = 0; i < model->nfaces(); i++)
+    {
+        for (int j = 0; j < 3; j++) {
+            zShader.vertex(i, j);
+        }
+        triangulate(zShader.varying_tri, zShader, frame, zBuffer);
+
+    }
+    const double limit = 100000;
+    for (int x = 0; x < width; x++) {
+        std::cout << x << '\n';
+        for (int y = 0; y < height; y++) {
+            if (zBuffer[x + y * width] < -limit) continue;
+            float total = 0;
+            for (float a = 0; a < std::numbers::pi_v<float> * 2 - 1e-4; a += std::numbers::pi_v<float> / 4) {
+                total += std::numbers::pi_v<float> / 2 - max_elevation_angle(zBuffer, Vec2f(x, y), Vec2f(cos(a), sin(a)));
+            }
+            total /= (std::numbers::pi_v<float> / 2) * 8;
+            total = pow(total, 100.f);
+            frame.set(x, y, TGAColor(total * 255, total * 255, total * 255));
+        }
+    }
+    
+    frame.flip_vertically();
+    frame.write_tga_file("african_head_ambient.tga");
    
     
     delete model;
     delete[] zBuffer;
-    delete[] shadowbuffer;
    
 	return 0;
 }
